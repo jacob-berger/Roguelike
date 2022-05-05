@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class GameMaster : MonoBehaviour
 {
@@ -9,6 +10,8 @@ public class GameMaster : MonoBehaviour
     public static GameMaster Instance {
         get {return _instance;}
     }
+
+    public Button PlayButton, OptionsButton, ExitButton;
 
     // Gameboard gameboard;
     // Player player;
@@ -27,13 +30,17 @@ public class GameMaster : MonoBehaviour
     void Start()
     {
 
-        Debug.Log("Here");
+
         
     }
 
     // Update is called once per frame
     void Update()
     {
+        
+    }
+
+    void PlayGame() {
         
     }
 }
