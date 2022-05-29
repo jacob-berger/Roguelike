@@ -11,8 +11,6 @@ public class GameMaster : MonoBehaviour
         get {return _instance;}
     }
 
-    public Button PlayButton, OptionsButton, ExitButton;
-
     // Gameboard gameboard;
     // Player player;
 
