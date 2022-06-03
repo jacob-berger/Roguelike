@@ -14,7 +14,7 @@ public class Bullet : MonoBehaviour
         GameObject effect = Instantiate(hitEffect, transform.position, Quaternion.identity);
         Destroy(effect, .5f);
         Enemy enemy = collision.GetComponent<Enemy>();
-        Debug.Log(enemy);
+        // Debug.Log(enemy);
         if (enemy != null)
         {
             enemy.TakeDamage(damage);

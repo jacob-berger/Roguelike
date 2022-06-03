@@ -10,7 +10,9 @@ public abstract class Enemy : MonoBehaviour
 
     public abstract void Move();
 
-    public abstract void Attack();
+    public abstract void OnTriggerEnter2D(Collider2D collider);
+
+    public abstract IEnumerator Attack();
 
     public abstract void TakeDamage(int damage);
 
