@@ -10,31 +10,31 @@ public class Bear : Enemy
     Rigidbody2D rb;
     IEnumerator attackRoutine;
     Vector2 target;
-    int cooldown;
-    bool hasAttacked;
+    int cooldown = 2;
+    bool isAttacking = false;
+    float savedTime;
 
     void Start()
     {
         this.health = 50;
         this.damage = 10;
         this.moveSpeed = 10f;
-        // attackRoutine = Attack();
-        cooldown = 3;
-        hasAttacked = false;
 
         player = GameObject.FindGameObjectWithTag("Player").transform;
         // animator.GetComponent<Rigidbody2D>();
+
+        savedTime = Time.time;
     }
 
     void FixedUpdate()
     {
+        target = new Vector2(player.position.x, player.position.y);
         Move();
-        hasAttacked = false;
+
     }
 
     public override void Move()
     {
-        target = new Vector2(player.position.x, player.position.y);
         if (rb.position.x < player.position.x)
         {
             GetComponent<SpriteRenderer>().flipX = true;
@@ -54,21 +54,43 @@ public class Bear : Enemy
         if (collider.gameObject.tag == "Player")
         {
             // StartCoroutine(attackRoutine);
-            StartCoroutine(Attack());
+            
+            if (Time.time - savedTime >= cooldown)
+            {
+                StartCoroutine(Attack());
+            }
+        }
+    }
+
+    public override void OnTriggerExit2D(Collider2D collider)
+    {
+        if (collider.gameObject.tag == "Player")
+        {
+            //
         }
     }
 
     public override IEnumerator Attack()
     {
+        isAttacking = true;
         Debug.Log("Attacking");
-        this.moveSpeed = 15f;
-        transform.position = Vector2.MoveTowards(rb.position, target, -1 * moveSpeed * Time.fixedDeltaTime);
-        // for (int ix = 1000; ix > 0; ix--);
-        yield return new WaitForSeconds(10f);
+        //back up
+        this.moveSpeed = -8f;
+        yield return new WaitForSeconds(2f);
+
+        //delay
+        this.moveSpeed = 0;
+        yield return new WaitForSeconds(.5f);
+
+        //charge
+        this.moveSpeed = 20f;
+        yield return new WaitForSeconds(1f);
+
         this.moveSpeed = 10f;
-        hasAttacked = true;
+        isAttacking = false;
+        savedTime = Time.time;
         Debug.Log("Finished");
-        // yield return null;
+        yield return null;
     }
 
     public override void TakeDamage(int damage)
