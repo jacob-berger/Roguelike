@@ -11,10 +11,15 @@ public class Bullet : MonoBehaviour
 
     void OnTriggerEnter2D(Collider2D collision)
     {
+        if (collision.gameObject.tag == "Player")
+        {
+            Debug.Log("Player Coll");
+            
+        }
         GameObject effect = Instantiate(hitEffect, transform.position, Quaternion.identity);
         Destroy(effect, .5f);
         Enemy enemy = collision.GetComponent<Enemy>();
-        // Debug.Log(enemy);
+
         if (enemy != null)
         {
             enemy.TakeDamage(damage);

@@ -2,11 +2,40 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public abstract class Enemy : MonoBehaviour
+public abstract class Enemy : Actor
 {
-    public int health;
-    public float moveSpeed;
-    public int damage;
+
+    private float _moveSpeed;
+    public float MoveSpeed
+    {
+        get
+        {
+            return _moveSpeed;
+        }
+        set
+        {
+            if (value > -1)
+            {
+                _moveSpeed = value;
+            }
+        }
+    }
+
+    private int _damage;
+    public int Damage
+    {
+        get
+        {
+            return _damage;
+        }
+        set
+        {
+            if (value > -1)
+            {
+                _damage = value;
+            }
+        }
+    }
 
     public abstract void Move();
 

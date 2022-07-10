@@ -12,13 +12,15 @@ public class Bear : Enemy
     Vector2 target;
     int cooldown = 2;
     bool isAttacking = false;
+    bool inRange = false;
     float savedTime;
 
     void Start()
     {
-        this.health = 50;
-        this.damage = 10;
-        this.moveSpeed = 10f;
+        MaxHealth = 50;
+        Health = MaxHealth;
+        Damage = 10;
+        MoveSpeed = 10f;
 
         player = GameObject.FindGameObjectWithTag("Player").transform;
         // animator.GetComponent<Rigidbody2D>();
@@ -44,7 +46,7 @@ public class Bear : Enemy
             GetComponent<SpriteRenderer>().flipX = false;
         }
 
-        transform.position = Vector2.MoveTowards(rb.position, target, moveSpeed * Time.fixedDeltaTime);
+        transform.position = Vector2.MoveTowards(rb.position, target, MoveSpeed * Time.fixedDeltaTime);
 
 
     }
@@ -54,8 +56,9 @@ public class Bear : Enemy
         if (collider.gameObject.tag == "Player")
         {
             // StartCoroutine(attackRoutine);
+            inRange = true;
             
-            if (Time.time - savedTime >= cooldown)
+            if (Time.time - savedTime >= cooldown && inRange && !isAttacking)
             {
                 StartCoroutine(Attack());
             }
@@ -66,7 +69,7 @@ public class Bear : Enemy
     {
         if (collider.gameObject.tag == "Player")
         {
-            //
+            inRange = false;
         }
     }
 
@@ -75,18 +78,18 @@ public class Bear : Enemy
         isAttacking = true;
         Debug.Log("Attacking");
         //back up
-        this.moveSpeed = -8f;
+        MoveSpeed = -8f;
         yield return new WaitForSeconds(2f);
 
         //delay
-        this.moveSpeed = 0;
+        MoveSpeed = 0;
         yield return new WaitForSeconds(.5f);
 
         //charge
-        this.moveSpeed = 20f;
+        MoveSpeed = 20f;
         yield return new WaitForSeconds(1f);
 
-        this.moveSpeed = 10f;
+        MoveSpeed = 10f;
         isAttacking = false;
         savedTime = Time.time;
         Debug.Log("Finished");
@@ -95,9 +98,9 @@ public class Bear : Enemy
 
     public override void TakeDamage(int damage)
     {
-        health -= damage;
+        Health -= damage;
 
-        if (health <= 0)
+        if (Health <= 0)
         {
             Die();
         }
