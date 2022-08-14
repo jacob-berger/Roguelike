@@ -6,14 +6,15 @@ TagManager:
   tags:
   - CameraNode
   - Enemy
+  - Trigger
   layers:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - 
+  - Bullets
   - Water
   - UI
-  - 
+  - Triggers
   - 
   - 
   - 

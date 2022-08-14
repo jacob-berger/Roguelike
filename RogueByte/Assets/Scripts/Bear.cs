@@ -51,21 +51,21 @@ public class Bear : Enemy
 
     }
 
-    public override void OnTriggerEnter2D(Collider2D collider)
-    {
-        if (collider.gameObject.tag == "Player")
-        {
-            // StartCoroutine(attackRoutine);
-            inRange = true;
+    // public override void OnTriggerEnter2D(Collider2D collider)
+    // {
+    //     if (collider.gameObject.tag == "Player")
+    //     {
+    //         // StartCoroutine(attackRoutine);
+    //         inRange = true;
             
-            if (Time.time - savedTime >= cooldown && inRange && !isAttacking)
-            {
-                StartCoroutine(Attack());
-            }
-        }
-    }
+    //         if (Time.time - savedTime >= cooldown && inRange && !isAttacking)
+    //         {
+    //             StartCoroutine(Attack());
+    //         }
+    //     }
+    // }
 
-    public override void OnTriggerExit2D(Collider2D collider)
+    public void OnTriggerExit2D(Collider2D collider)
     {
         if (collider.gameObject.tag == "Player")
         {
@@ -73,26 +73,43 @@ public class Bear : Enemy
         }
     }
 
+    public void EnteredTrigger()
+    {
+        inRange = true;
+            
+        if (Time.time - savedTime >= cooldown && inRange && !isAttacking)
+        {
+            StartCoroutine(Attack());
+        }
+    }
+
+    public void ExitedTrigger()
+    {
+        inRange = false;
+    }
+
     public override IEnumerator Attack()
     {
-        isAttacking = true;
-        Debug.Log("Attacking");
-        //back up
-        MoveSpeed = -8f;
-        yield return new WaitForSeconds(2f);
+        
+            isAttacking = true;
+            Debug.Log("Attacking");
+            //back up
+            MoveSpeed = -8f;
+            yield return new WaitForSeconds(2f);
 
-        //delay
-        MoveSpeed = 0;
-        yield return new WaitForSeconds(.5f);
+            //delay
+            MoveSpeed = 0;
+            yield return new WaitForSeconds(.5f);
 
-        //charge
-        MoveSpeed = 20f;
-        yield return new WaitForSeconds(1f);
+            //charge
+            MoveSpeed = 20f;
+            yield return new WaitForSeconds(1f);
 
-        MoveSpeed = 10f;
-        isAttacking = false;
-        savedTime = Time.time;
-        Debug.Log("Finished");
+            MoveSpeed = 10f;
+            isAttacking = false;
+            savedTime = Time.time;
+            Debug.Log("Finished");
+        
         yield return null;
     }
 

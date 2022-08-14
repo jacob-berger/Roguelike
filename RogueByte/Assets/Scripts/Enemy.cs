@@ -39,9 +39,9 @@ public abstract class Enemy : Actor
 
     public abstract void Move();
 
-    public abstract void OnTriggerEnter2D(Collider2D collider);
+    // public abstract void OnTriggerEnter2D(Collider2D collider);
 
-    public abstract void OnTriggerExit2D(Collider2D collider);
+    // public abstract void OnTriggerExit2D(Collider2D collider);
 
     public abstract IEnumerator Attack();
 
