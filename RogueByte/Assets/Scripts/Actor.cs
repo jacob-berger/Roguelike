@@ -32,10 +32,7 @@ public abstract class Actor : MonoBehaviour
         }
         set
         {
-            if (value > 0)
-            {
-                _health = value;
-            }
+            _health = value;
         }
     }
 

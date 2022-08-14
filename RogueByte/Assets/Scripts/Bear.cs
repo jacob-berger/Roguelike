@@ -116,11 +116,12 @@ public class Bear : Enemy
     public override void TakeDamage(int damage)
     {
         Health -= damage;
-
         if (Health <= 0)
         {
+            Health = 0;
             Die();
         }
+        Debug.Log("Health: " + Health);
     }
 
     public override void Die()
