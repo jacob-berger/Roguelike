@@ -20,7 +20,7 @@ public class Bear : Enemy
         MaxHealth = 50;
         Health = MaxHealth;
         Damage = 10;
-        MoveSpeed = 10f;
+        MoveSpeed = 20f;
 
         player = GameObject.FindGameObjectWithTag("Player").transform;
         // animator.GetComponent<Rigidbody2D>();
@@ -32,6 +32,10 @@ public class Bear : Enemy
     {
         target = new Vector2(player.position.x, player.position.y);
         Move();
+        if (Time.time - savedTime >= cooldown && inRange && !isAttacking)
+        {
+            StartCoroutine(Attack());
+        }
 
     }
 
@@ -51,20 +55,6 @@ public class Bear : Enemy
 
     }
 
-    // public override void OnTriggerEnter2D(Collider2D collider)
-    // {
-    //     if (collider.gameObject.tag == "Player")
-    //     {
-    //         // StartCoroutine(attackRoutine);
-    //         inRange = true;
-            
-    //         if (Time.time - savedTime >= cooldown && inRange && !isAttacking)
-    //         {
-    //             StartCoroutine(Attack());
-    //         }
-    //     }
-    // }
-
     public void OnTriggerExit2D(Collider2D collider)
     {
         if (collider.gameObject.tag == "Player")
@@ -77,16 +67,12 @@ public class Bear : Enemy
     {
         inRange = true;
             
-        if (Time.time - savedTime >= cooldown && inRange && !isAttacking)
-        {
-            StartCoroutine(Attack());
-        }
     }
 
-    public void ExitedTrigger()
-    {
-        inRange = false;
-    }
+    // public void ExitedTrigger()
+    // {
+    //     inRange = false;
+    // }
 
     public override IEnumerator Attack()
     {
@@ -94,7 +80,7 @@ public class Bear : Enemy
             isAttacking = true;
             Debug.Log("Attacking");
             //back up
-            MoveSpeed = -8f;
+            MoveSpeed = -40f;
             yield return new WaitForSeconds(2f);
 
             //delay
@@ -102,10 +88,10 @@ public class Bear : Enemy
             yield return new WaitForSeconds(.5f);
 
             //charge
-            MoveSpeed = 20f;
+            MoveSpeed = 40f;
             yield return new WaitForSeconds(1f);
 
-            MoveSpeed = 10f;
+            MoveSpeed = 20f;
             isAttacking = false;
             savedTime = Time.time;
             Debug.Log("Finished");

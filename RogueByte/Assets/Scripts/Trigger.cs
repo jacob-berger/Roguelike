@@ -28,7 +28,7 @@ public class Trigger : MonoBehaviour
     {
         if (collider.gameObject.tag == "Player")
         {
-            this.transform.parent.GetComponent<Bear>().ExitedTrigger();
+            // this.transform.parent.GetComponent<Bear>().ExitedTrigger();
         }
     }
 }
