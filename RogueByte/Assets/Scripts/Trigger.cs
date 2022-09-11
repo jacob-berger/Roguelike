@@ -1,13 +1,21 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
 
 public class Trigger : MonoBehaviour
 {
+
+    string parentName;
+    Transform parent;
+    Transform grandparent;
+
     // Start is called before the first frame update
     void Start()
     {
-        
+        parent = this.transform.parent;
+        grandparent = parent.parent;
+        parentName = parent.name;
     }
 
     // Update is called once per frame
@@ -20,7 +28,16 @@ public class Trigger : MonoBehaviour
     {
         if (collider.gameObject.tag == "Player")
         {
-            this.transform.parent.GetComponent<Bear>().EnteredTrigger();
+            switch (parentName)
+            {
+                case "Bear":
+                    grandparent.GetComponent<Bear>().EnteredTrigger();
+                    break;
+                default:
+                    // Debug.Log(parentName);
+                    break;
+            }
+            
         }
     }
 
@@ -28,7 +45,15 @@ public class Trigger : MonoBehaviour
     {
         if (collider.gameObject.tag == "Player")
         {
-            // this.transform.parent.GetComponent<Bear>().ExitedTrigger();
+            switch (parentName)
+            {
+                case "Bear":
+                    grandparent.GetComponent<Bear>().ExitedTrigger();
+                    break;
+                default:
+                    // Debug.Log(parentName);
+                    break;
+            }
         }
     }
 }

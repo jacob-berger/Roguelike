@@ -55,24 +55,18 @@ public class Bear : Enemy
 
     }
 
-    public void OnTriggerExit2D(Collider2D collider)
-    {
-        if (collider.gameObject.tag == "Player")
-        {
-            inRange = false;
-        }
-    }
-
     public void EnteredTrigger()
     {
         inRange = true;
+        // Debug.Log("Entered bear Trigger");
             
     }
 
-    // public void ExitedTrigger()
-    // {
-    //     inRange = false;
-    // }
+    public void ExitedTrigger()
+    {
+        inRange = false;
+        // Debug.Log("Exited bear Trigger");
+    }
 
     public override IEnumerator Attack()
     {
@@ -94,7 +88,7 @@ public class Bear : Enemy
             MoveSpeed = 20f;
             isAttacking = false;
             savedTime = Time.time;
-            Debug.Log("Finished");
+            // Debug.Log("Finished");
         
         yield return null;
     }
